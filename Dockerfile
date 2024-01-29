@@ -1,8 +1,8 @@
 FROM openjdk:11
 
-COPY target/Brokers_Project-0.0.1-SNAPSHOT.jar Brokers_Project.jar
+COPY target/broker-0.0.1-SNAPSHOT.jar broker.jar
 
-ENTRYPOINT ["java","-jar","Brokers_Project.jar"]
+ENTRYPOINT ["java","-jar","broker.jar"]
 
 Expose 8081
 
