@@ -1,0 +1,74 @@
+package com.java.adProvider.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import com.java.adProvider.model.AdProviderDetails;
+import com.java.adProvider.model.Role;
+import com.java.adProvider.model.User;
+import com.java.adProvider.model.UserRole;
+import com.java.adProvider.repo.AdProviderDetailsRepository;
+import com.java.adProvider.repo.UserRepository;
+import com.java.adProvider.response.ResponseHandler;
+import com.java.adProvider.service.AdProviderDetailsService;
+
+@RestController
+@RequestMapping
+public class AdProviderDetailsController {
+	@Autowired
+	private AdProviderDetailsService adProviderDetailsService;
+
+	@Autowired
+	private AdProviderDetailsRepository adProviderDetailsRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+
+	@GetMapping("/")
+	public ResponseEntity<?> getAdProviderDetailsList() {
+		List<AdProviderDetails> adprovider = adProviderDetailsService.getAllAdProviderList();
+		if (adprovider == null) {
+			return null;
+		}
+		return ResponseHandler.responseBuilder(" Successfully Fetched List Of AdProviderDeatils", HttpStatus.OK.value(),
+				adprovider, HttpStatus.OK);
+
+	}
+
+	
+//	@GetMapping("/")
+//	public ResponseEntity<?> getAdPrviderById(@PathVariable("ad_provider_id") Long ad_provider_id) {
+//	   AdProviderDetails adProviderDetails = adProviderDetailsService.getAdProviderById(ad_provider_id);
+//				if (adProviderDetails == null) {
+//			return ResponseHandler.responseBuilder("Ad Provider Not Found", HttpStatus.NO_CONTENT.value(),
+//					null, HttpStatus.NO_CONTENT);
+//		}
+//return ResponseHandler.responseBuilder("AdProvider Found", HttpStatus.OK.value(), null,
+//				HttpStatus.OK);
+//	}
+
+  @PostMapping("/adprovider")
+	public ResponseEntity<?> createAdProviderDetails(@RequestBody AdProviderDetails adProviderDetalis) {
+//      String user_id=adProviderDetalis.getUser().getUser_id();
+//        String userId = adProviderDetalis.getUser_id();
+//        System.out.println("---------->"+userId);
+	  AdProviderDetails adProviderDeatlis1= adProviderDetailsService.createAdProvider(adProviderDetalis);
+	
+       return ResponseHandler.responseBuilder("You Are added AdProvider details Successfully", HttpStatus.OK.value(),	 adProviderDeatlis1, HttpStatus.OK);
+
+		
+	}
+}
